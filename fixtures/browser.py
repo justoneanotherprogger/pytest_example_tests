@@ -5,15 +5,27 @@ import pytest
 
 
 @pytest.fixture(name="set_up_browser")
-def fixture_set_up_browser():
-    service = Service(executable_path=ChromeDriverManager().install())
-    options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
-    options.add_argument("--window-size=1920,1080")
-    # options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    # options.add_argument("--fullscreen")
-    options.add_argument("--enable-automation")
-    driver = webdriver.Chrome(service=service, options=options)
+def fixture_set_up_browser(install_webdriver, set_browser_options):
+    service = Service(executable_path=install_webdriver, service_args=['--silent'])
+    driver = webdriver.Chrome(service=service, options=set_browser_options)
     yield driver
     driver.quit()
+
+
+@pytest.fixture(name="set_browser_options", scope="session")
+def fixture_set_browser_options():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")
+    # options.add_argument("--window-size=1920,1080")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--start-maximized")
+    options.add_argument("--enable-automation")
+    # options.add_argument("--disable-in-process-stack-traces")
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    return options
+
+
+@pytest.fixture(name="install_webdriver", scope="session")
+def fixture_install_webdriver():
+    webdriver_path = ChromeDriverManager().install()
+    return webdriver_path

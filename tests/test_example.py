@@ -1,6 +1,7 @@
 import pytest
 from selenium.webdriver.common.by import By
 
+
 class TestExample:
     
     @pytest.mark.xfail
