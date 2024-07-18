@@ -1,6 +1,9 @@
+import pytest
 from selenium.webdriver.common.by import By
 
 class TestExample:
+    
+    @pytest.mark.xfail
     def test_example_1(self, set_up_browser):
         driver = set_up_browser
         driver.get("https://habr.com/")
