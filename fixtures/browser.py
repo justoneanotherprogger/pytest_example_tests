@@ -10,6 +10,7 @@ import pytest
 def fixture_set_up_browser(install_webdriver, set_browser_options):
     service = Service(executable_path=install_webdriver, service_args=['--silent'])
     driver = webdriver.Chrome(service=service, options=set_browser_options)
+    driver.implicitly_wait(5)
     yield driver
     driver.quit()
 
