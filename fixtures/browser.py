@@ -1,3 +1,4 @@
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -5,6 +6,7 @@ import pytest
 
 
 @pytest.fixture(name="set_up_browser")
+@allure.title("Подготовка браузера")
 def fixture_set_up_browser(install_webdriver, set_browser_options):
     service = Service(executable_path=install_webdriver, service_args=['--silent'])
     driver = webdriver.Chrome(service=service, options=set_browser_options)
@@ -13,6 +15,7 @@ def fixture_set_up_browser(install_webdriver, set_browser_options):
 
 
 @pytest.fixture(name="set_browser_options", scope="session")
+@allure.title("Настройка опций браузера")
 def fixture_set_browser_options():
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
@@ -26,6 +29,7 @@ def fixture_set_browser_options():
 
 
 @pytest.fixture(name="install_webdriver", scope="session")
+@allure.title("Установка драйвера")
 def fixture_install_webdriver():
     webdriver_path = ChromeDriverManager().install()
     return webdriver_path
