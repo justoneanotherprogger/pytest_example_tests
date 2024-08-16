@@ -3,7 +3,9 @@ import pytest
 from selenium.webdriver.common.by import By
 from steps.asserts import assert_that, assert_existance, assert_many
 from steps.browser import open_link_in_browser, find_element_in_browser
-from config.common import base_url
+from config.common import get_base_url
+
+base_url = get_base_url('ui')
 
 
 @allure.parent_suite("UI-тесты")

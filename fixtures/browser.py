@@ -8,6 +8,9 @@ import pytest
 @pytest.fixture(name="set_up_browser")
 @allure.title("Подготовка браузера")
 def fixture_set_up_browser(install_webdriver, set_browser_options):
+    """
+    Инициализирует браузер, исходя из пути до исполняемого файла и объекта настроек
+    """
     service = Service(executable_path=install_webdriver, service_args=['--silent'])
     driver = webdriver.Chrome(service=service, options=set_browser_options)
     driver.implicitly_wait(5)
@@ -18,6 +21,9 @@ def fixture_set_up_browser(install_webdriver, set_browser_options):
 @pytest.fixture(name="set_browser_options", scope="session")
 @allure.title("Настройка опций браузера")
 def fixture_set_browser_options():
+    """
+    Позволяет настроить браузер под нужды тестирования
+    """
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     # options.add_argument("--window-size=1920,1080")
@@ -32,5 +38,8 @@ def fixture_set_browser_options():
 @pytest.fixture(name="install_webdriver", scope="session")
 @allure.title("Установка драйвера")
 def fixture_install_webdriver():
+    """
+    Устанавливает драйвер браузера Chrome
+    """
     webdriver_path = ChromeDriverManager().install()
     return webdriver_path

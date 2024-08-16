@@ -8,9 +8,11 @@ from helpers.asserts import get_assert_function
 def assert_that(left_side: Any, operator: str, right_side: Any):
     """
     Сравнивает значения между собой
-    :param left_side: Левый операнд
-    :param operator: Оператор сравнения. Поддерживаются операторы: equals, contains
-    :param right_side: Правый операнд
+    Поддерживаются операторы: 'equals', 'contains'
+    Поддерживаются также варианты с отрицанием: 'not equals', 'not contains', например
+    :param left_side: левый операнд
+    :param operator: оператор сравнения
+    :param right_side: правый операнд
     """
     assert_function = get_assert_function(operator)
     assert_function(left_side, right_side)
@@ -18,6 +20,12 @@ def assert_that(left_side: Any, operator: str, right_side: Any):
 
 @allure.step("Сравниваю несколько наборов значений")
 def assert_many(list_of_equations: list):
+    """
+    Сравнивает между собой несколько наборов значений
+    Поддерживаются операторы: 'equals', 'contains'.
+    Поддерживаются также варианты с отрицанием: 'not equals', 'not contains', например
+    :param list_of_equations: кортеж вида (левый операнд, оператор сравнения, правый операнд)
+    """
     for equation in list_of_equations:
         assert len(equation) == 3
         left_side, operator, right_side = equation
@@ -26,6 +34,10 @@ def assert_many(list_of_equations: list):
 
 @allure.step("Проверяю существование")
 def assert_existance(operand: Any):
+    """
+    Проверяет, что операнд существует
+    :param operand: что угодно
+    """
     try:
         assert operand
     except AssertionError:
